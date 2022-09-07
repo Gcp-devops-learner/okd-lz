@@ -28,7 +28,7 @@ then
   echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present." 
 else  
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH " 
-ssh-keygen -b 2048 -t rsa -f $SSH_PATH -q -N "" <<< $'\ny' >/dev/null 2>&1
+ssh-keygen -b 2048 -t rsa -f $SSH_PATH -q -N ""
 fi
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" 
 }
