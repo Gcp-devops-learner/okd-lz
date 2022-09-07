@@ -22,15 +22,15 @@ source $(dirname "$0")/variables.sh
 
 # Generate SSH key to attach to the bastion host and enable passwordless access 
 function generate_ssh() {
-echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------"
 if [ -f $SSH_PATH ] 
 then
-  echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present." >> ${LOG_FILE}
+  echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present." 
 else  
-echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH " >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH " 
 ssh-keygen -b 2048 -t rsa -f $SSH_PATH -q -N "" <<< $'\ny' >/dev/null 2>&1
 fi
-echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" >> ${LOG_FILE} 
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" 
 }
 
 # function to provision infrastructure via terraform 
@@ -146,8 +146,7 @@ echo  "$(date +'%Y-%m-%d %H:%M:%S'):-------- Start of the OKD Automation Script 
 mkdir -p ${SSH_PATH}
 mkdir -p ${LOG_PATH}
 touch ${LOG_FILE}
-echo "${LOG_FILE}"
-echo  "$(date +'%Y-%m-%d %H:%M:%S'):-------- Created folders successfully ------------" >> ${LOG_FILE}
+echo  "$(date +'%Y-%m-%d %H:%M:%S'):-------- Created folders successfully ------------"
 generate_ssh
 provision_infra
 copy_files
