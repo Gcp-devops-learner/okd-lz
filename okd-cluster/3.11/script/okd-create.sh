@@ -30,7 +30,7 @@ then
 else  
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH "  >> ${LOG_FILE}
 ## ssh-keygen -b 2048 -t rsa -f $SSH_PATH/id_rsa -q -N "" <<< y 
-ssh-keygen -b 2048 -t rsa -f $SSH_PATH -q -N "" <<< $'\ny' >/dev/null 2>&1
+ssh-keygen -b 2048 -t rsa -f $SSH_PATH -q -N "" <<< $'\ny'
 fi
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" 
