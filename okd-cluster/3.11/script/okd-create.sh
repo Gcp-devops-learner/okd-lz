@@ -143,10 +143,10 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- okd set configurations function ends
 }
 
 echo  "$(date +'%Y-%m-%d %H:%M:%S'):-------- Start of the OKD Automation Script ------------"
-## mkdir -p ${SSH_PATH}
-## mkdir -p ${LOG_PATH}
-## touch ${LOG_FILE}
-
+mkdir -p ${SSH_PATH}
+mkdir -p ${LOG_PATH}
+touch ${LOG_FILE}
+echo  "$(date +'%Y-%m-%d %H:%M:%S'):-------- Created folders successfully ------------"
 generate_ssh
 provision_infra
 copy_files
