@@ -22,26 +22,30 @@ source $(dirname "$0")/variables.sh
 
 # Generate SSH key to attach to the bastion host and enable passwordless access 
 function generate_ssh() {
-echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------"
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> 
 if [ -f $SSH_PUB_FILE ] 
 then
-  echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present." 
+  echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present."  >> ${LOG_FILE}
 else  
-echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH " 
+echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH "  >> ${LOG_FILE}
 ssh-keygen -b 2048 -t rsa -f $SSH_PATH/id_rsa -q -N "" <<< y 
 fi
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" 
 }
 
 # function to provision infrastructure via terraform 
 function provision_infra() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ------------" 
 cd ../terraform
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Running terraform to provision the backend infrastructure" >> ${LOG_FILE}
 terraform init  >> ${LOG_FILE}
 terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" >> ${LOG_FILE}
 terraform apply plan.out >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------"
 }
 
 # function to copy the host and the ssh files
