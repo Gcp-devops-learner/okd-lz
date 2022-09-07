@@ -23,7 +23,7 @@ source $(dirname "$0")/variables.sh
 # Generate SSH key to attach to the bastion host and enable passwordless access 
 function generate_ssh() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> ${LOG_FILE}
-echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> 
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------"
 if [ -f $SSH_PUB_FILE ] 
 then
   echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present."  >> ${LOG_FILE}
