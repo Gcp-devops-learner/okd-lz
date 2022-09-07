@@ -15,8 +15,8 @@
 
 #!/bin/bash
 
-SSH_PATH=${HOME}/gcp_keys/id_rsa
-SSH_PUB_FILE=${SSH_PATH}.pub
+SSH_PATH=${HOME}/gcp_keys
+SSH_PUB_FILE=${SSH_PATH}/id_rsa.pub
 SSH_USER=avinashjha
 REGION=europe-west1
 ZONE=europe-west1-b
