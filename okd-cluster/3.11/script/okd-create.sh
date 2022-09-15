@@ -51,6 +51,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------
 
 # function to copy the host and the ssh files
 function copy_files() {
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function starts ------------" 
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function starts ------------" >> ${LOG_FILE}
 export BASTION_HOST=$(terraform output bastion | tr -d '"')
 export PROJECT=$(terraform output project_id | tr -d '"')
@@ -61,10 +62,12 @@ gcloud compute scp  --project=$PROJECT --zone=$ZONE $SSH_PATH $SSH_USER@$BASTION
 gcloud compute scp  --project=$PROJECT --zone=$ZONE ./inventory/ansible-hosts $SSH_USER@$BASTION_HOST:/home/$SSH_USER >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Successfully copied ssh key and host file" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function ends ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function ends ------------" 
 }
 
 # function to provision the  OKD cluster
 function provision_cluster() {
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function starts ------------"
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function starts ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the bastion host and run ansible scripts" >> ${LOG_FILE}
 gcloud compute ssh --project=$PROJECT --zone=$ZONE $SSH_USER@$BASTION_HOST >> ${LOG_FILE} << EOF 
@@ -86,11 +89,13 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'): Exiting from the bastion host."
 run_ansible
 EOF
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function ends ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function ends ------------" 
 }
 
 
 ## function to deploy manifest on the cluster 
 function deploy_manifest() {
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function starts ------------"
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function starts ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the master host to deploy manifest files" >> ${LOG_FILE}
 
@@ -124,6 +129,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Deploy BOA function Ends -----------
 deploy_boa
 EOF
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function ends ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function ends ------------"
 }
 
 ## function to set configuraiton for the OKD cluster 
