@@ -3,7 +3,7 @@ region       = "europe-west1"
 master_count = 1
 node_count   = 2
 
-project_name              = "okd-tf"
+project_name              = "okd-tf01"
 # Need to be passed only when create_project variable is set to false else leave it as empty variable
 project_id                = ""
 org_id                    = "34545645634345" // Organisation ID
