@@ -43,7 +43,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ----
 cd ../terraform
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Running terraform to provision the backend infrastructure" >> ${LOG_FILE}
 terraform init --reconfigure  >> ${LOG_FILE}
-terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" >> ${LOG_FILE}
+terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" -var="project_id"=$PROJECT_ID >> ${LOG_FILE}
 terraform apply plan.out >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------"
