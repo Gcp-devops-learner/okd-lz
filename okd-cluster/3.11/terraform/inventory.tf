@@ -7,7 +7,7 @@ data "template_file" "inventory" {
     # infra1_hostname = "${google_compute_instance.infra1.network_interface.0.network_ip}"
     # worker1_hostname = "${google_compute_instance.worker1.network_interface.0.network_ip}"
     # demo_htpasswd = "${var.htpasswd}"
-    gcp_project = "${module.project.project_id}"
+    gcp_project = "${var.project_id}"
     ssh_user = "${var.ssh_user}"
   }
 }

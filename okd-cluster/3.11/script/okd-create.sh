@@ -42,7 +42,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ----
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ------------" 
 cd ../terraform
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Running terraform to provision the backend infrastructure" >> ${LOG_FILE}
-terraform init  >> ${LOG_FILE}
+terraform init --reconfigure  >> ${LOG_FILE}
 terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" >> ${LOG_FILE}
 terraform apply plan.out >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------" >> ${LOG_FILE}
@@ -58,7 +58,7 @@ export PROJECT=$(terraform output project_id | tr -d '"')
 export MASTER=$(terraform output master | tr -d '"')
 export LB_IP=$(terraform output google_compute_address | tr -d '"')
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Copying ssh key and host file" >> ${LOG_FILE}
-gcloud compute scp  --project=$PROJECT --zone=$ZONE $SSH_PATH $SSH_USER@$BASTION_HOST:~/.ssh/id_rsa >> ${LOG_FILE}
+gcloud compute scp  --project=$PROJECT --zone=$ZONE $SSH_PATH/id_rsa $SSH_USER@$BASTION_HOST:~/.ssh/id_rsa >> ${LOG_FILE}
 gcloud compute scp  --project=$PROJECT --zone=$ZONE ./inventory/ansible-hosts $SSH_USER@$BASTION_HOST:/home/$SSH_USER >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Successfully copied ssh key and host file" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function ends ------------" >> ${LOG_FILE}

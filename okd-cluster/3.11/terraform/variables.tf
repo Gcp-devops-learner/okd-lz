@@ -42,10 +42,10 @@ variable "billing_account" {
   type        = string
 }
 
-variable "project_name" {
-  description = "The name of the GCP project. Max 16 characters with 3 character business unit code."
-  type        = string
-}
+# variable "project_name" {
+#   description = "The name of the GCP project. Max 16 characters with 3 character business unit code."
+#   type        = string
+# }
 
 variable "application_name" {
   description = "The name of application where GCP resources relate"

@@ -1,6 +1,6 @@
 module "network" {
   source         = "./modules/gcp_tf_network"
-  project_id     = module.project.project_id
+  project_id     = var.project_id
   prefix         = var.prefix
   name           = "1"
   default_region = var.region

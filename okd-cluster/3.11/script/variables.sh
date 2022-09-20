@@ -24,3 +24,6 @@ OKD_VERSION=release-3.11
 LOG_PATH="${HOME}/okd/logs"
 LOG_FILE="${LOG_PATH}/create-okd-logs-$(date +'%Y-%m-%d-%H:%M:%S')"
 DELETE_LOG_FILE="${LOG_PATH}/delete-okd-logs-$(date +'%Y-%m-%d-%H:%M:%S')"
+ORG_ID=615056687435
+BILLING_ACCOUNT=0090FE-ED3D81-AF8E3B
+CONTACT=avinashjha@google.com

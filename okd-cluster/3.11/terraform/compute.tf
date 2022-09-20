@@ -1,6 +1,6 @@
 data "google_compute_zones" "zones" {
   region  = var.region
-  project = module.project.project_id
+  project = var.project_id
 }
 
 data "google_compute_image" "centos7" {
@@ -9,7 +9,7 @@ data "google_compute_image" "centos7" {
 }
 
 resource "google_compute_instance_template" "okd-tpl" {
-  project     = module.project.project_id
+  project     = var.project_id
   description = "Template for OKD compute instances"
 
   tags = ["okd", "openshift"]
@@ -51,7 +51,7 @@ EOF
 
 resource "google_compute_instance_from_template" "os-control-plane" {
   count   = var.master_count
-  project = module.project.project_id
+  project = var.project_id
   name    = "${var.prefix}-cluster-cp-${count.index}"
   zone    = data.google_compute_zones.zones.names[0]
 
@@ -62,7 +62,7 @@ resource "google_compute_instance_from_template" "os-control-plane" {
 
 resource "google_compute_instance_from_template" "os-data-plane" {
   count   = var.node_count
-  project = module.project.project_id
+  project = var.project_id
   name    = "${var.prefix}-cluster-dp-${count.index}"
   zone    = data.google_compute_zones.zones.names[0]
 
@@ -73,7 +73,7 @@ resource "google_compute_instance_from_template" "os-data-plane" {
 
 resource "google_compute_instance_from_template" "os-infra-plane" {
   count   = 1
-  project = module.project.project_id
+  project = var.project_id
   name    = "${var.prefix}-cluster-in-${count.index}"
   zone    = data.google_compute_zones.zones.names[0]
 
@@ -84,7 +84,7 @@ resource "google_compute_instance_from_template" "os-infra-plane" {
 
 resource "google_compute_instance_from_template" "os-deployer" {
   count   = 1
-  project = module.project.project_id
+  project = var.project_id
   name    = "${var.prefix}-cluster-deployer-${count.index}"
   zone    = data.google_compute_zones.zones.names[0]
 
