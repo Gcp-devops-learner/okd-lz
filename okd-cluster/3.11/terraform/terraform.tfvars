@@ -18,7 +18,7 @@ activate_apis = [
   "dns.googleapis.com",
   "servicenetworking.googleapis.com"
 ]
-master_subdomain = "okd.avinashj.in"
-public_subdomain = "console.okd.avinashj.in"
-dns_master_subdomain = "okd.avinashj.in."
+master_subdomain = "shifter.avinashj.in"
+public_subdomain = "console.shifter.avinashj.in"
+dns_master_subdomain = "shifter.avinashj.in."
 ssh_user = "" // overidden byscript
