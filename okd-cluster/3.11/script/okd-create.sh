@@ -86,6 +86,7 @@ fi
 mv /home/$SSH_USER/ansible-hosts /home/$SSH_USER/openshift-ansible/inventory
 cd openshift-ansible
 git checkout $OKD_VERSION
+hostnamectl | grep 'hostname'
 ansible-playbook -i inventory/ansible-hosts playbooks/prerequisites.yml 
 ansible-playbook -i inventory/ansible-hosts playbooks/deploy_cluster.yml
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Exiting from the bastion host."
@@ -105,6 +106,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the master host to deploy manifest f
 gcloud compute ssh --project=$PROJECT --zone=$ZONE $SSH_USER@$MASTER >> ${LOG_FILE} << EOF
 function deploy_boa() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Deploy BOA function starts ------------"
+hostnamectl | grep 'hostname'
 
 if [ -d bank-of-anthos ]
 then
