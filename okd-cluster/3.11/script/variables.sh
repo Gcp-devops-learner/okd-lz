@@ -17,7 +17,7 @@
 
 SSH_PATH=${HOME}/gcp_keys
 SSH_PUB_FILE=${SSH_PATH}/id_rsa.pub
-SSH_USER=avinashjha
+SSH_USER=cloudbuild
 REGION=europe-west1
 ZONE=europe-west1-b
 OKD_VERSION=release-3.11
