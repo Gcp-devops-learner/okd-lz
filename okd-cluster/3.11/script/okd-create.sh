@@ -43,7 +43,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function starts ----
 cd ../terraform
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Running terraform to provision the backend infrastructure" >> ${LOG_FILE}
 terraform init --reconfigure  >> ${LOG_FILE}
-terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" -var="project_id"=$PROJECT_ID >> ${LOG_FILE}
+terraform plan -out plan.out -var="gce_ssh_user=$SSH_USER" -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="region=$REGION" -var="ssh_user=$SSH_USER" -var="org_id=$ORG_ID" -var="billing_account=$BILLING_ACCOUNT" -var="primary_contact=$CONTACT" -var="project_id"=$PROJECT >> ${LOG_FILE}
 terraform apply plan.out >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision Infra function Ends ------------"
@@ -54,7 +54,7 @@ function copy_files() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function starts ------------" 
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Copy files function starts ------------" >> ${LOG_FILE}
 export BASTION_HOST=$(terraform output bastion | tr -d '"')
-export PROJECT=$(terraform output project_id | tr -d '"')
+# export PROJECT=$(terraform output project_id | tr -d '"')
 export MASTER=$(terraform output master | tr -d '"')
 export LB_IP=$(terraform output google_compute_address | tr -d '"')
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Copying ssh key and host file" >> ${LOG_FILE}
@@ -70,6 +70,10 @@ function provision_cluster() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function starts ------------"
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Provision cluster function starts ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the bastion host and run ansible scripts" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'): BASTION_HOST: $BASTION_HOST"
+echo "$(date +'%Y-%m-%d %H:%M:%S'): MASTER $MASTER"
+echo "$(date +'%Y-%m-%d %H:%M:%S'): PROJECT $PROJECT"
+
 gcloud compute ssh --project=$PROJECT --zone=$ZONE $SSH_USER@$BASTION_HOST >> ${LOG_FILE} << EOF 
 function run_ansible() {
 if [ -d openshift-ansible ] 
@@ -98,7 +102,6 @@ function deploy_manifest() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function starts ------------"
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- deploy manifest function starts ------------" >> ${LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the master host to deploy manifest files" >> ${LOG_FILE}
-
 gcloud compute ssh --project=$PROJECT --zone=$ZONE $SSH_USER@$MASTER >> ${LOG_FILE} << EOF
 function deploy_boa() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Deploy BOA function starts ------------"
