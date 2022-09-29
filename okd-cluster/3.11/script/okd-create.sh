@@ -87,6 +87,8 @@ mv /home/$SSH_USER/ansible-hosts /home/$SSH_USER/openshift-ansible/inventory
 cd openshift-ansible
 git checkout $OKD_VERSION
 hostnamectl | grep 'hostname'
+pwd 
+which ansible
 ansible-playbook -i inventory/ansible-hosts playbooks/prerequisites.yml 
 ansible-playbook -i inventory/ansible-hosts playbooks/deploy_cluster.yml
 echo "$(date +'%Y-%m-%d %H:%M:%S'): Exiting from the bastion host."
