@@ -26,7 +26,7 @@ function delete_manifest() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Manifest function starts  ------------" >> ${DELETE_LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Bank of anthos deployment ------------" >> ${DELETE_LOG_FILE}
 cd ../terraform
-PROJECT=$(terraform output project_id | tr -d '"')
+## PROJECT=$(terraform output project_id | tr -d '"')
 MASTER=$(terraform output master | tr -d '"')
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the master node to delete manifest files" >> ${DELETE_LOG_FILE}
 
@@ -52,7 +52,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- delete manifest function ends ------
 function delete_infra() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Infra function starts ------------" >> ${DELETE_LOG_FILE}
 cd ../terraform
-terraform destroy  -var="gce_ssh_pub_key_file=${HOME}/gcp_keys/id_rsa.pub" -auto-approve >> ${DELETE_LOG_FILE}
+terraform destroy  -var="gce_ssh_pub_key_file=${HOME}/gcp_keys/id_rsa.pub" -var="project_id"=$PROJECT  -auto-approve >> ${DELETE_LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Infra function Ends ------------" >> ${DELETE_LOG_FILE}
 }
 touch ${DELETE_LOG_FILE}
