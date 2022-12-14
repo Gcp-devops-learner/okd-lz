@@ -73,6 +73,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the bastion host and run ansible scr
 echo "$(date +'%Y-%m-%d %H:%M:%S'): BASTION_HOST: $BASTION_HOST"
 echo "$(date +'%Y-%m-%d %H:%M:%S'): MASTER $MASTER"
 echo "$(date +'%Y-%m-%d %H:%M:%S'): PROJECT $PROJECT"
+echo "$(date +'%Y-%m-%d %H:%M:%S'): LB_IP $LB_IP"
 
 gcloud compute ssh --project=$PROJECT --zone=$ZONE $SSH_USER@$BASTION_HOST >> ${LOG_FILE} << EOF 
 function run_ansible() {
