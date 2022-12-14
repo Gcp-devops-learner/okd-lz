@@ -26,6 +26,7 @@ function delete_manifest() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Manifest function starts  ------------" >> ${DELETE_LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Bank of anthos deployment ------------" >> ${DELETE_LOG_FILE}
 cd ../terraform
+terraform init
 ## PROJECT=$(terraform output project_id | tr -d '"')
 MASTER=$(terraform output master | tr -d '"')
 echo "$(date +'%Y-%m-%d %H:%M:%S'):SSH into the master node to delete manifest files" >> ${DELETE_LOG_FILE}
