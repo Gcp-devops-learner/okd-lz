@@ -55,6 +55,8 @@ cd ../terraform
 terraform destroy  -var="gce_ssh_pub_key_file=${HOME}/gcp_keys/id_rsa.pub" -var="project_id"=$PROJECT  -auto-approve >> ${DELETE_LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Infra function Ends ------------" >> ${DELETE_LOG_FILE}
 }
+mkdir -p ${SSH_PATH}
+mkdir -p ${LOG_PATH}
 touch ${DELETE_LOG_FILE}
 
 
