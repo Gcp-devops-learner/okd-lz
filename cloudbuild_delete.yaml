@@ -1,0 +1,30 @@
+steps:
+## Checkout the OKD automation script
+- name: 'gcr.io/cloud-builders/git'
+  args: 
+  - clone
+  - https://github.com/avinashkumar1289/okd-lz.git
+  volumes:
+  - name : 'myvolume'
+    path : '/okd-lz'
+
+# # Delete OKD cluster 
+- name : 'avinash2312/terraform_cloudbuild:1.0.2' 
+  entrypoint: 'bash'
+  args : 
+  - '-c'
+  - |
+     cd ./okd-lz/okd-cluster/3.11/script
+     ./okd-delete.sh
+  env:
+  - 'PROJECT=okd-automation2'   
+  volumes:
+  - name : 'myvolume'
+    path : '/shifter'  
+
+## Delete cluster logs
+- name: gcr.io/cloud-builders/gsutil
+  args: ["cp", "/builder/home/okd/logs/delete-okd-logs-*", "gs://okd-artifacts/delete-cluster/"]
+  volumes:
+  - name: 'myvolume'
+    path: '/shifter'

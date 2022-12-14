@@ -1,0 +1,33 @@
+steps:
+## Checkout the OKD automation script
+- name: 'gcr.io/cloud-builders/git'
+  args: 
+  - clone
+  - https://github.com/avinashkumar1289/okd-lz.git
+  volumes:
+  - name : 'myvolume'
+    path : '/okd-lz'
+## Run the okd create script with the valid environment variable
+- name : 'avinash2312/terraform_cloudbuild:1.0.2'
+  entrypoint: 'bash'
+ # args : ['./okd-lz/okd-cluster/3.11/script/okd-create.sh']
+  args : 
+  - '-c'
+  - |
+     cd ./okd-lz/okd-cluster/3.11/script
+     ./okd-create.sh
+  env:
+  - 'ORG_ID=615056687435'
+  - 'BILLING_ACCOUNT=0090FE-ED3D81-AF8E3B'
+  - 'CONTACT=avinashjha@google.com'
+  - 'PROJECT=okd-automation2'
+  - 'SSH_USER=cloudbuild'
+  volumes:
+  - name : 'myvolume'
+    path : '/shifter'
+## Logs for create cluster
+- name: gcr.io/cloud-builders/gsutil
+  args: ["cp", "/builder/home/okd/logs/create-okd-logs-*", "gs://okd-artifacts/create-cluster/"]
+  volumes:
+  - name: 'myvolume'
+    path: '/shifter'
