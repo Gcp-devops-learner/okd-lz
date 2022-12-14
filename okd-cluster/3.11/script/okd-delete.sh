@@ -20,6 +20,22 @@
 set -e 
 source $(dirname "$0")/variables.sh
 
+## Generate SSH Key
+function generate_ssh() {
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function starts ------------"
+if [ -f $SSH_PUB_FILE ] 
+then
+  echo "$(date +'%Y-%m-%d %H:%M:%S'): SSH Key is already present."  >> ${LOG_FILE}
+else  
+echo "$(date +'%Y-%m-%d %H:%M:%S'): Generating SSH keys $SSH_PATH "  >> ${LOG_FILE}
+ssh-keygen -b 2048 -t rsa -f $SSH_PATH/id_rsa -q -N "" <<< y 
+## ssh-keygen -b 2048 -t rsa -f $SSH_PATH/id_rsa -q -N "" <<< $'\ny' >/dev/null 2>&1
+fi
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" >> ${LOG_FILE}
+echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Generate SSH function Ends ------------" 
+}
+
 ## Destroy BOA deployment on OKD cluster
 
 function delete_manifest() {
@@ -54,7 +70,7 @@ function delete_infra() {
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Infra function starts ------------" >> ${DELETE_LOG_FILE}
 cd ../terraform
 terraform init
-terraform destroy  -var="gce_ssh_pub_key_file=${HOME}/gcp_keys/id_rsa.pub" -var="project_id"=$PROJECT  -auto-approve >> ${DELETE_LOG_FILE}
+terraform destroy  -var="gce_ssh_pub_key_file=$SSH_PUB_FILE" -var="project_id"=$PROJECT  -auto-approve >> ${DELETE_LOG_FILE}
 echo "$(date +'%Y-%m-%d %H:%M:%S'):-------- Delete Infra function Ends ------------" >> ${DELETE_LOG_FILE}
 }
 mkdir -p ${SSH_PATH}
@@ -62,6 +78,6 @@ mkdir -p ${LOG_PATH}
 touch ${DELETE_LOG_FILE}
 
 
-
-delete_manifest
+generate_ssh
+##delete_manifest
 delete_infra
