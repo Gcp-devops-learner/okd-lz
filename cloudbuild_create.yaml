@@ -18,8 +18,8 @@ steps:
      ./okd-create.sh
   env:
   - 'ORG_ID=615056687435'
-  - 'BILLING_ACCOUNT=0090FE-ED3D81-AF8E3B'
-  - 'CONTACT=avinashjha@google.com'
+  - 'BILLING_ACCOUNT=0090FE-ED31-AF8E3B'
+  - 'CONTACT=avinash@google.com'
   - 'PROJECT=okd-automation2'
   - 'SSH_USER=cloudbuild'
   volumes:
